@@ -8,11 +8,13 @@
   --rayon: 12px;
   --espace: 1rem;
 }
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
+
 body {
   font-family:
     system-ui,
@@ -21,57 +23,285 @@ body {
   line-height: 1.6;
   color: var(--texte);
   background: var(--fond);
-  padding: var(--espace);
 }
 
+/* En-tête et Navigation */
+header {
+  max-width: 800px;
+  margin: 0 auto var(--espace) auto;
+  padding: 0 var(--espace);
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  background: var(--carte);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0 0 var(--rayon) var(--rayon);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  z-index: 100;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+nav a {
+  color: var(--texte);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: opacity 0.2s ease;
+}
+
+nav a:hover {
+  opacity: 0.7;
+}
+
+/* Titres de la page */
+header div {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+h1 {
+  font-size: 2.25rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.025em;
+}
+
+.sous-titre {
+  color: var(--texte-clair);
+  font-size: 1.1rem;
+}
+
+/* Conteneur principal */
 main {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 2.5rem;
+  padding: 0 var(--espace) 3rem var(--espace);
 }
+
+/* Structure des Cartes */
 .carte {
   background: var(--carte);
   border-radius: var(--rayon);
-  padding: 1.5rem;
+  padding: 2rem;
   max-width: 640px;
+  width: 100%;
   margin: 0 auto;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
 }
+
+.carte h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--fond);
+  padding-bottom: 0.5rem;
+}
+
+/* Grille des résultats FizzBuzz */
 .result {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 1rem;
+  gap: 0.75rem;
+  margin-top: 1rem;
 }
+
+/* Style commun des cellules FizzBuzz */
+.result > div,
+.fizz,
+.buzz,
+.fizzbuzz {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1; /* Crée des formes parfaitement carrées */
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background-color: var(
+    --fond
+  ); /* Couleur par défaut pour les nombres normaux */
+}
+
+/* Overrides de couleurs spécifiques */
 .fizz {
   background-color: var(--rouge);
-  font-weight: 500;
-  /* padding: 1rem 0.5rem; */
-  text-align: center;
+  color: #ffffff;
 }
+
 .buzz {
   background-color: var(--vert);
-  font-weight: 500;
-  text-align: center;
-
-  /* padding: 1rem 0.5rem; */
+  color: #ffffff;
 }
+
 .fizzbuzz {
   background-color: var(--texte-clair);
-  font-weight: 500;
-  text-align: center;
-
-  /* padding: 1rem 0.5rem; */
+  color: #ffffff;
 }
+
+/* Section Tables de Multiplication */
+#tables > p {
+  color: var(--texte-clair);
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+#tables ol {
+  padding-left: 1.25rem;
+}
+
+#tables li {
+  margin-bottom: 2rem;
+}
+
+#tables li:last-child {
+  margin-bottom: 0;
+}
+
+#tables h3 {
+  font-size: 1.15rem;
+  margin-bottom: 1rem;
+  color: var(--texte-clair);
+}
+
+/* Conteneurs pour vos injections de tables JS */
+#tab,
+#multitab {
+  background: var(--fond);
+  padding: 1rem;
+  border-radius: 8px;
+  font-family: monospace; /* Idéal pour l'alignement des chiffres des tables */
+  font-size: 1rem;
+}
+/* ==========================================================================
+   STYLES POUR LE MODULE DES TABLES DE MULTIPLICATION
+   ========================================================================== */
+
+/* 1. Table de multiplication unique (Table de 5) */
+#tab {
+  background: var(--carte);
+  padding: 0; /* On retire le padding pour styliser les lignes individuellement */
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--fond);
+}
+
+.tab-num {
+  padding: 0.5rem 1rem;
+  margin: 0;
+  border-bottom: 1px solid var(--fond);
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.tab-num:last-child {
+  border-bottom: none;
+}
+
+/* Effet :hover sur chaque ligne de calcul de la table unique */
+.tab-num:hover {
+  background-color: var(--fond);
+  padding-left: 1.5rem; /* Léger décalage vers la droite au survol */
+}
+
+/* 2. Multi-tables (Tables de 1 à 9) */
+#multitab {
+  background: transparent; /* On enlève le fond global pour voir les cartes individuelles */
+  padding: 1.5rem 0 0 0;
+
+  /* Configuration Flexbox demandée */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  justify-content: center;
+}
+
+/* Style de chaque carte individuelle de table (Table de 1, Table de 2, etc.) */
+.carte-table {
+  background: var(--carte);
+  flex: 1 1 calc(33.333% - 1.25rem); /* 3 colonnes sur grand écran */
+  min-width: 200px; /* Évite que les cartes ne deviennent trop petites sur mobile */
+  padding: 1.25rem;
+  border-radius: 8px;
+  border: 2px solid var(--fond);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* Titre à l'intérieur de chaque carte */
+.carte-table h4 {
+  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  color: var(--texte);
+  border-bottom: 2px solid var(--fond);
+  padding-bottom: 0.25rem;
+  text-align: center;
+}
+
+/* Lignes de calcul dans les multi-tables */
+.carte-table p {
+  font-size: 0.9rem;
+  padding: 0.15rem 0.5rem;
+  margin: 0;
+  border-radius: 4px;
+  transition: background-color 0.15s ease;
+}
+
+/* Effet :hover sur les cases / lignes des multi-tables */
+.carte-table p:hover {
+  background-color: var(--fond);
+}
+
+/* Effet :hover global sur toute la carte de table */
+.carte-table:hover {
+  transform: translateY(-4px); /* Soulève légèrement la carte */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  border-color: var(
+    --vert
+  ); /* Utilise votre variable verte pour la bordure au survol */
+}
+
+/* Ajustement pour les tablettes (2 colonnes) */
+@media (max-width: 768px) {
+  .carte-table {
+    flex: 1 1 calc(50% - 1.25rem);
+  }
+}
+
+/* Ajustement pour les mobiles (1 colonne) */
+@media (max-width: 480px) {
+  .carte-table {
+    flex: 1 1 100%;
+  }
+}
+
+/* Design Responsif pour tablettes et ordinateurs */
 @media (min-width: 768px) {
   body {
-    padding: 2rem;
+    padding: var(--espace);
   }
+
   .carte {
     max-width: 800px;
+    padding: 2.5rem;
   }
+
   .result {
-    display: grid;
     grid-template-columns: repeat(10, 1fr);
-    gap: 1rem;
+    gap: 0.5rem;
   }
 }
